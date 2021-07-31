@@ -1,0 +1,38 @@
+type Query {
+    stickerById(id: ID): Sticker!
+    stickers: [Sticker]!
+}
+
+type Sticker {
+    id: ID
+    name: String
+    description: String
+    author: Author
+    categories: [Category]
+}
+
+type Author {
+    id: ID,
+    name: String
+}
+
+type Category {
+    id: ID,
+    name: String
+}
+
+type Mutation {
+    addSticker(
+        id: ID
+        name: String
+        description: String
+    ): Sticker
+    addAuthor(
+        id: ID
+        name: String
+    ): Author
+}
+
+type Subscription {
+    subscribeSticker: Sticker
+}
