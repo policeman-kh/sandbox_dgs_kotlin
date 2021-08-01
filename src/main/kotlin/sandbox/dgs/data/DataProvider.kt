@@ -11,4 +11,5 @@ interface DataProvider {
     fun stickerById(id: String): Mono<InternalSticker>
     fun author(id: String): Mono<Author>
     fun category(id: String): Mono<Category>
+    fun addSticker(sticker: InternalSticker): Mono<InternalSticker>
 }

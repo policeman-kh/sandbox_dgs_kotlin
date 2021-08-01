@@ -11,11 +11,11 @@ import sandbox.dgs.model.InternalSticker
 @Component
 class ContentDataProvider : DataProvider {
     override fun stickers(): Flux<InternalSticker> {
-        return Flux.fromIterable(stickers)
+        return Flux.fromIterable(stickersSaved())
     }
 
     override fun stickerById(id: String): Mono<InternalSticker> {
-        return Flux.fromIterable(stickers)
+        return Flux.fromIterable(stickersSaved())
             .filter { sticker -> sticker.sticker.id.equals(id) }
             .take(1)
             .singleOrEmpty()
@@ -35,6 +35,15 @@ class ContentDataProvider : DataProvider {
             .singleOrEmpty()
     }
 
+    override fun addSticker(sticker: InternalSticker): Mono<InternalSticker> {
+        stickersAdded.add(sticker)
+        return Mono.just(sticker)
+    }
+
+    private fun stickersSaved(): List<InternalSticker> {
+        return stickers + stickersAdded
+    }
+
     companion object {
         val authors = listOf(Author("1", "author1"), Author("2", "author2"))
         val categories = listOf(Category("1", "category1"), Category("2", "category2"))
@@ -45,5 +54,6 @@ class ContentDataProvider : DataProvider {
             InternalSticker(Sticker("4", "name4", "description4"), "2", listOf("1")),
             InternalSticker(Sticker("5", "name5", "description5"), "2", listOf()),
         )
+        val stickersAdded = mutableListOf<InternalSticker>()
     }
 }
