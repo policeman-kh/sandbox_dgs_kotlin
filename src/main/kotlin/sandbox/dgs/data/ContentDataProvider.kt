@@ -1,6 +1,8 @@
 package sandbox.dgs.data
 
 import org.springframework.stereotype.Component
+import reactor.core.publisher.Flux
+import reactor.core.publisher.Mono
 import sandbox.dgs.gen.types.Author
 import sandbox.dgs.gen.types.Category
 import sandbox.dgs.gen.types.Sticker
@@ -8,20 +10,29 @@ import sandbox.dgs.model.InternalSticker
 
 @Component
 class ContentDataProvider : DataProvider {
-    override fun stickers(): List<InternalSticker> {
-        return stickers
+    override fun stickers(): Flux<InternalSticker> {
+        return Flux.fromIterable(stickers)
     }
 
-    override fun stickerById(id: String): InternalSticker? {
-        return stickers.filter { sticker -> sticker.sticker.id.equals(id) }.firstOrNull()
+    override fun stickerById(id: String): Mono<InternalSticker> {
+        return Flux.fromIterable(stickers)
+            .filter { sticker -> sticker.sticker.id.equals(id) }
+            .take(1)
+            .singleOrEmpty()
     }
 
-    override fun author(id: String): Author? {
-        return authors.filter { author -> author.id.equals(id) }.firstOrNull()
+    override fun author(id: String): Mono<Author> {
+        return Flux.fromIterable(authors)
+            .filter { author -> author.id.equals(id) }
+            .take(1)
+            .singleOrEmpty()
     }
 
-    override fun category(id: String): Category? {
-        return categories.filter { category -> category.id.equals(id) }.firstOrNull()
+    override fun category(id: String): Mono<Category> {
+        return Flux.fromIterable(categories)
+            .filter { category -> category.id.equals(id) }
+            .take(1)
+            .singleOrEmpty()
     }
 
     companion object {

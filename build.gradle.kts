@@ -18,9 +18,8 @@ repositories {
 
 dependencies {
     implementation(platform("com.netflix.graphql.dgs:graphql-dgs-platform-dependencies:4.5.0"))
-    implementation("com.netflix.graphql.dgs:graphql-dgs-spring-boot-starter")
-    implementation("com.netflix.graphql.dgs:graphql-dgs-subscriptions-websockets-autoconfigure")
-    implementation("org.springframework.boot:spring-boot-starter-web")
+    implementation("com.netflix.graphql.dgs:graphql-dgs-webflux-starter")
+    implementation("org.springframework.boot:spring-boot-starter-webflux")
     implementation("org.springframework.boot:spring-boot-starter-actuator")
     implementation("io.micrometer:micrometer-registry-prometheus:latest.release")
     implementation("com.netflix.graphql.dgs:graphql-dgs-spring-boot-micrometer")
